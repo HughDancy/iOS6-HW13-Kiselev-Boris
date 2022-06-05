@@ -15,9 +15,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         let firstViewController = ViewController()
-        let firstNavigationControllet = UINavigationController(rootViewController: firstViewController)
-        
-        window?.rootViewController = firstNavigationControllet
+        let firstNavigationController = UINavigationController(rootViewController: firstViewController)
+        firstViewController.navigationItem.hidesSearchBarWhenScrolling = true
+                
+        window?.rootViewController = firstNavigationController
         window?.makeKeyAndVisible()
         return true
     }

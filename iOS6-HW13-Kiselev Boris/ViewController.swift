@@ -11,40 +11,29 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     
     
-    //MARK: - View's
+    //MARK: - Subview's
     
     let idTable = UITableView(frame: .zero, style: UITableView.Style.insetGrouped)
     
-    private lazy var searchStackview: UIStackView = {
-        let searchStackview = UIStackView()
-        searchStackview.axis = .horizontal
+    private lazy var searchField: UISearchBar  = {
+        let searchField = UISearchBar()
+        searchField.searchBarStyle = UISearchBar.Style.minimal
+        searchField.barTintColor = UIColor(displayP3Red: 0.96, green: 0.96, blue: 0.98, alpha: 1)
+        searchField.placeholder = "Поиск"
         
-        return searchStackview
+        return searchField
     }()
-    
-    private lazy var searchTextField: UITextField = {
-        let searchTextField = UITextField()
-        let searchImageView = UIImageView()
-        let searchImage = UIImage(named: "searchImage")
-        searchImageView.image = searchImage
-        searchTextField.placeholder = " Поиск"
-        searchTextField.leftView = searchImageView
-        searchTextField.leftViewMode = .always
-        searchTextField.backgroundColor = UIColor(displayP3Red: 0.91, green: 0.90, blue: 0.93, alpha: 1)
-        searchTextField.layer.cornerRadius = 5
-        searchTextField.clipsToBounds = true
-        
-        return searchTextField
-    }()
+
     
     //MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.addSubview(searchStackview)
+        view.addSubview(searchField)
         view.addSubview(idTable)
         idTable.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
-        searchStackview.addArrangedSubview(searchTextField)
+        navigationController?.navigationBar.topItem?.hidesSearchBarWhenScrolling = true
+        navigationController?.navigationBar.topItem?.hidesSearchBarWhenScrolling = true
         setTableview()
         setupLayout()
         setupData()
@@ -56,7 +45,17 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.prefersLargeTitles = true
+        navigationController?.navigationBar.topItem?.hidesSearchBarWhenScrolling = true
+        self.navigationController?.hidesBarsOnSwipe = true
+        navigationController?.setNavigationBarHidden(false, animated: animated)
         
+    
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: animated)
+//        navigationController?.hidesBarsOnSwipe = false
     }
     
     //MARK: - Table and Cell Settings
@@ -71,7 +70,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-
         return settingsData.count
     }
     
@@ -88,10 +86,19 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         cell.backgroundColor = .white
         cell.layer.cornerRadius = 2
         cell.clipsToBounds = true
-                
-    
+        
+        let switchForCell = UISwitch(frame: .zero)
+        switchForCell.setOn(false, animated: true)
+        switchForCell.tag = indexPath.row
+        
         cell.contentConfiguration = content
-        cell.accessoryType = .disclosureIndicator
+        
+        if content.text == "Авиарежим" || content.text == "VPN" {
+            cell.accessoryView = switchForCell
+        } else {
+            cell.accessoryType = .disclosureIndicator
+        }
+        
         return cell
     }
     
@@ -114,27 +121,22 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         settingsData.append(thirdPartyAppData)
     }
     
-    
     // MARK: - Layout Settings
     
     func setupLayout() {
         
-        searchStackview.translatesAutoresizingMaskIntoConstraints = false
-        searchStackview.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 3).isActive = true
-        searchStackview.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 19).isActive = true
-        searchStackview.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -19).isActive = true
-        searchStackview.widthAnchor.constraint(equalTo: searchStackview.widthAnchor).isActive = true
-        searchStackview.heightAnchor.constraint(equalToConstant: 35).isActive = true
+        searchField.translatesAutoresizingMaskIntoConstraints = false
+        searchField.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 3).isActive = true
+        searchField.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 19).isActive = true
+        searchField.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -19).isActive = true
         
         idTable.translatesAutoresizingMaskIntoConstraints = false
-        idTable.topAnchor.constraint(equalTo: searchStackview.bottomAnchor, constant: 5).isActive = true
+        idTable.topAnchor.constraint(equalTo: searchField.bottomAnchor, constant: 5).isActive = true
         idTable.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 1).isActive = true
         idTable.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -1).isActive = true
         idTable.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
         
     }
-    
-    
 }
 
 
