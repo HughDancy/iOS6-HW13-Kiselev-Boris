@@ -44,7 +44,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.prefersLargeTitles = true
-        navigationController?.navigationBar.topItem?.hidesSearchBarWhenScrolling = true
         navigationController?.hidesBarsOnSwipe = true
         
     }
@@ -84,7 +83,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         let switchForCell = UISwitch(frame: .zero)
         switchForCell.setOn(false, animated: true)
-//        switchForCell.tag = indexPath.row
         
         cell.contentConfiguration = content
         
