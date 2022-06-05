@@ -7,8 +7,6 @@
 
 import UIKit
 
-// MARK: - Create a struct and massive of this struct with image and text of settings. Don't forget first added images in assets
-
 struct Data {
     var image: [UIImage?]
     var text: [String]
@@ -16,6 +14,7 @@ struct Data {
 }
 
 var settingsData = [Data]()
+
 
 let idSettings = Data(image: [UIImage(named: "Portrait"), nil],
                       text: ["Борис Киселев", "Копия не создавалась"],
@@ -52,4 +51,9 @@ let tvProvaiderData = Data(image: [UIImage(named: "TVProvaider")], text: ["Те�
 
 let developerData = Data(image: [UIImage(named: "Developer")], text: ["Developer"], secondText: [nil])
 
-let thirdPartyAppData = Data(image: [UIImage(named: "VK"), UIImage(named: "Y.Music"), UIImage(named: "Discord"), UIImage(named: "Kinopoisk"), UIImage(named: "AppleStore"), UIImage(named: "Telegram"), UIImage(named: "Slack"), UIImage(named: "WhatsApp"), UIImage(named: "YOTA")], text: ["VK", "Я.Музыка", "Discord", "Кинопоиск", "Apple Store", "Telegram", "Slack", "WhatsApp", "YOTA"], secondText: [nil, nil, nil, nil, nil, nil, nil, nil, nil])
+let thirdPartyAppData = Data(image: [UIImage(named: "VK"), UIImage(named: "Y.Music"),                                              UIImage(named: "Discord"), UIImage(named: "Kinopoisk"),                                       UIImage(named: "AppleStore"), UIImage(named: "Telegram"),                                     UIImage(named: "Slack"), UIImage(named: "WhatsApp"),                                          UIImage(named: "YOTA")],
+                             text: ["VK", "Я.Музыка", "Discord", "Кинопоиск", "Apple Store", "Telegram", "Slack", "WhatsApp", "YOTA"],
+                             secondText: [nil, nil, nil, nil, nil, nil, nil, nil, nil])
+
+
+
