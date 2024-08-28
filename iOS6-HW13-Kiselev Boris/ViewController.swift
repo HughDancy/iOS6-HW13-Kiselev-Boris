@@ -8,37 +8,22 @@
 import UIKit
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    
-    
-    
-    //MARK: - Subview's
-    
+    // MARK: - Subview's
     let settingsTable = UITableView(frame: .zero, style: UITableView.Style.insetGrouped)
-    
+
     private lazy var searchField: UISearchBar  = {
         let searchField = UISearchBar()
         searchField.searchBarStyle = UISearchBar.Style.minimal
         searchField.barTintColor = UIColor(displayP3Red: 0.96, green: 0.96, blue: 0.98, alpha: 1)
         searchField.placeholder = "Поиск"
-        
         return searchField
     }()
-    
-    
+
     //MARK: - Lifecycle
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.addSubview(searchField)
-        view.addSubview(settingsTable)
+        setupView()
         settingsTable.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
-        navigationController?.navigationBar.topItem?.hidesSearchBarWhenScrolling = true
-        setTableview()
-        setupLayout()
-        setupData()
-        
-        view.backgroundColor = UIColor(displayP3Red: 0.96, green: 0.96, blue: 0.98, alpha: 1)
-        title = "Настройки"
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -47,13 +32,24 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         navigationController?.hidesBarsOnSwipe = true
         
     }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
+    // MARK: - Setup View
+    private func setupView() {
+        setupHierarchy()
+        setTableview()
+        setupLayout()
+        setupData()
+        navigationController?.navigationBar.topItem?.hidesSearchBarWhenScrolling = true
+        view.backgroundColor = UIColor(displayP3Red: 0.96, green: 0.96, blue: 0.98, alpha: 1)
+        title = "Настройки"
     }
-    
-    //MARK: - Table and Cell Settings
-    
+
+    // MARK: - Setup Hierarchy
+    private func setupHierarchy() {
+        view.addSubview(searchField)
+        view.addSubview(settingsTable)
+    }
+
+    // MARK: - Table and Cell Settings
     private func setTableview() {
         settingsTable.delegate = self
         settingsTable.dataSource = self
@@ -92,8 +88,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             cell.accessoryView = .none
             cell.accessoryType = .disclosureIndicator
         }
-        
-
         return cell
     }
     
@@ -116,9 +110,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     // MARK: - Layout Settings
-    
     func setupLayout() {
-        
         searchField.translatesAutoresizingMaskIntoConstraints = false
         searchField.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 3).isActive = true
         searchField.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 19).isActive = true
@@ -129,7 +121,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         settingsTable.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 1).isActive = true
         settingsTable.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -1).isActive = true
         settingsTable.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
-        
     }
 }
 
